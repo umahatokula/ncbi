@@ -22,12 +22,12 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('whatsapp_number')->nullable();
             $table->string('occupation')->nullable();
-            $table->string('gender')->nullable();
-            $table->string('marital_status')->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->enum('marital_status', ['single', 'married', 'divorced', 'separated'])->nullable();
             $table->text('address')->nullable();
-            $table->string(Center::class)->nullable();
-            $table->string(C3::class)->nullable();
-            $table->string(ServiceTeam::class)->nullable();
+            $table->foreignIdFor(Center::class)->nullable();
+            $table->foreignIdFor(C3::class)->nullable();
+            $table->foreignIdFor(ServiceTeam::class)->nullable();
             $table->boolean('gone_through_growth_track')->nullable();
             $table->string('growth_track_year')->nullable();
             $table->timestamps();

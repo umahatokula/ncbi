@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Assessment;
 use App\Models\C3;
 use App\Models\Center;
+use App\Models\Profile;
 use App\Models\ServiceTeam;
 use App\Models\Set;
 use App\Models\User;
@@ -22,6 +24,8 @@ class DatabaseSeeder extends Seeder
         Center::factory(10)->create();
         C3::factory(10)->create();
         ServiceTeam::factory(10)->create();
+        Assessment::factory(10)->create();
+        Profile::factory(10)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',
