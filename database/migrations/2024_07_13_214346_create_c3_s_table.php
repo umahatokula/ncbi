@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('c3_s', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->boolean('is_active')->nullable();
+            $table->text('address')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamps();
         });
     }

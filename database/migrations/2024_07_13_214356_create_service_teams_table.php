@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('service_teams', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->boolean('is_active')->nullable();
             $table->timestamps();
         });
     }

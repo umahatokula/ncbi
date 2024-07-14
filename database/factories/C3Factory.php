@@ -17,7 +17,10 @@ class C3Factory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'is_active' => $this->faker->boolean,
+            'address' => $this->faker->address,
+            'phone' => $this->faker->phoneNumber,
         ];
     }
 }

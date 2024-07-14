@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\C3;
+use App\Models\Center;
+use App\Models\ServiceTeam;
+use App\Models\Set;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,11 +17,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory(10)->create();
+        Set::factory(10)->create();
+        Center::factory(10)->create();
+        C3::factory(10)->create();
+        ServiceTeam::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        $this->call([
+            RolesAndPermissionsSeeder::class
         ]);
     }
 }

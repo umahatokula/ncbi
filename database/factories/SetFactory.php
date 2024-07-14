@@ -17,7 +17,10 @@ class SetFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->word,
+            'is_active' => $this->faker->boolean,
+            'start_date' => $this->faker->date,
+            'end_date' => $this->faker->date,
         ];
     }
 }

@@ -17,7 +17,8 @@ class ServiceTeamFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->company,
+            'is_active' => $this->faker->boolean,
         ];
     }
 }
