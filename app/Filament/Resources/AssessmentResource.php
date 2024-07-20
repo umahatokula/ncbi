@@ -10,18 +10,22 @@ use App\Models\Assessment;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Livewire;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AssessmentResource\Pages;
 use App\Filament\Resources\AssessmentResource\RelationManagers;
 use App\Filament\Resources\AssessmentResource\RelationManagers\QuestionsRelationManager;
-use Filament\Forms\Components\Section;
+use App\Livewire\Assessment\AssessmentQuestions;
 
 class AssessmentResource extends Resource
 {
     protected static ?string $model = Assessment::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    // protected static ?string $navigationGroup = 'Assessments';
 
     public static function form(Form $form): Form
     {
@@ -30,6 +34,7 @@ class AssessmentResource extends Resource
                 Section::make()->schema([
                     Forms\Components\Select::make('set_id')
                         ->relationship('set', 'name')
+                        ->columnSpan(2)
                         ->native(false)
                         ->searchable()
                         ->preload()
@@ -83,6 +88,9 @@ class AssessmentResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->headerActions([
+                Tables\Actions\AttachAction::make(),
+            ])
             ->filters([
                 //
             ])
@@ -109,6 +117,7 @@ class AssessmentResource extends Resource
             'index' => Pages\ListAssessments::route('/'),
             'create' => Pages\CreateAssessment::route('/create'),
             'edit' => Pages\EditAssessment::route('/{record}/edit'),
+            'questions' => Pages\AssessmentQuestions::route('/{record}/questions'),
         ];
     }
 }

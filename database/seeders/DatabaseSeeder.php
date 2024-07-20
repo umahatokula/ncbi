@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         Center::factory(10)->create();
         C3::factory(10)->create();
         ServiceTeam::factory(10)->create();
-        Assessment::factory(10)->create();
+        Assessment::factory(3)->create();
         Profile::factory(10)->create();
 
         // User::factory()->create([

@@ -8,15 +8,19 @@ use App\Models\Question;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\ImportAction;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Imports\QuestionImporter;
 use App\Filament\Resources\QuestionResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\QuestionResource\RelationManagers;
+use App\Filament\Resources\QuestionResource\Pages\ImportQuestions;
 
 class QuestionResource extends Resource
 {
@@ -32,9 +36,6 @@ class QuestionResource extends Resource
                     Forms\Components\Textarea::make('question_text')
                         ->required()
                         ->columnSpanFull(),
-                    // Forms\Components\TextInput::make('category_code')
-                    //     ->maxLength(255)
-                    //     ->default(null),
                 ]),
                 Section::make()->schema([
                     Repeater::make('options')
@@ -60,6 +61,15 @@ class QuestionResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                //
+                Action::make('import')
+                    ->label('Import Questions')
+                    ->url(fn (): string => route('filament.admin.resources.questions.import'))
+                    ->hidden(! auth()->user()->can('create exam question'))
+                    ->button()
+                    ->outlined()
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -83,6 +93,7 @@ class QuestionResource extends Resource
             'index' => Pages\ListQuestions::route('/'),
             'create' => Pages\CreateQuestion::route('/create'),
             'edit' => Pages\EditQuestion::route('/{record}/edit'),
+            'import' => ImportQuestions::route('/import'),
         ];
     }
 }
