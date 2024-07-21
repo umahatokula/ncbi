@@ -94,7 +94,7 @@
                         </div>
                         <div class="flex space-x-4 mt-1 text-xs">
                             <p>
-                                Opens: {{ Carbon\Carbon::parse($assessment->validity_start_time)->format('d M Y') }}
+                                Starts: {{ Carbon\Carbon::parse($assessment->validity_start_time)->format('d M Y') }}
                             </p>
                             <p class="font-sans font-light text-gray-500">
                                 {{ Carbon\Carbon::parse($assessment->validity_start_time)->format('g:ia') }}
@@ -137,11 +137,9 @@
                                         <a
                                             class="w-full rounded-xl text-center py-1 block font-bold text-sm bg-gray-300 cursor-not-allowed text-white">{{ $attempt->is_submitted ? 'Submitted' : 'Submit' }}</a>
                                     @else
-                                        <a data-request="onFinalAttemptSubmission"
-                                            data-request-confirm="Before submitting, please ensure that you have attempted the test as many times as desired or allowed. Once submitted, you can no longer take this test. This action is irreversible."
-                                            data-request-data="{ assessmentId: {{ $assessment->id }}, attemptId: {{ $attempt->id }} }"
-                                            class="w-full rounded-xl text-center py-1 block font-bold text-sm bg-blue-700 text-white"
-                                            href="#">Submit</a>
+                                        <button type="button" wire:click="onFinalAttemptSubmission({{ $attempt->id }})"
+                                            wire:confirm="Before submitting, please ensure that you have attempted the test as many times as desired or allowed. Once submitted, you can no longer take this test. This action is irreversible."
+                                            class="w-full rounded-xl text-center py-1 block font-bold text-sm bg-blue-700 text-white">Submit</button>
                                     @endif
                                 </div>
                             @endforeach

@@ -54,8 +54,14 @@ class AssessmentResource extends Resource
                         ->required()
                         ->numeric(),
                     Forms\Components\DateTimePicker::make('validity_start_time')
+                        ->timezone('Africa/Lagos')
+                        ->native(false)
+                        ->closeOnDateSelection()
                         ->required(),
                     Forms\Components\DateTimePicker::make('validity_end_time')
+                        ->timezone('Africa/Lagos')
+                        ->native(false)
+                        ->closeOnDateSelection()
                         ->required(),
                 ])->columns(2)
             ])->columns(1);

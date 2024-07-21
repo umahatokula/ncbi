@@ -112,7 +112,7 @@ class Exam extends Component
         $score = $this->attempt->getScore();
 
         if(!$score) {
-            session()->flash('error', 'An error occured. Contact Admin');
+            session()->flash('error', 'An error occured. Please contact Admin');
             return redirect('/assessments');
         }
 
