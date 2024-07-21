@@ -27,8 +27,10 @@ class SetResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Toggle::make('is_active'),
-                Forms\Components\DatePicker::make('start_date'),
-                Forms\Components\DatePicker::make('end_date'),
+                Forms\Components\DatePicker::make('start_date')
+                    ->native(false),
+                Forms\Components\DatePicker::make('end_date')
+                    ->native(false),
             ]);
     }
 
