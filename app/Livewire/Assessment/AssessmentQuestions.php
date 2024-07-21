@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Livewire\Assessment;
 
 use Livewire\Component;
-
 use App\Models\Question;
 use App\Models\Assessment;
 
@@ -20,12 +18,14 @@ class AssessmentQuestions extends Component
         $this->selectedQuestions = Assessment::find($assessmentId)->questions->pluck('id')->toArray();
     }
 
-    public function updatedSelectedQuestions()
+    public function saveSelectedQuestions()
     {
         $assessment = Assessment::find($this->assessmentId);
         $assessment->questions()->sync($this->selectedQuestions);
+
+        $this->redirectRoute('filament.admin.resources.assessments.edit', ['record' => $this->assessmentId]);
     }
-    
+
     public function render()
     {
         return view('livewire.assessment.assessment-questions');

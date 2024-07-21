@@ -113,7 +113,7 @@
                         @if ($assessment->attempts->count() > 0)
                             @foreach ($assessment->attempts as $attempt)
                                 <div
-                                    class="border border-blue-500 rounded-xl p-3 mt-3 {{ attempt . is_submitted ? 'bg-blue-50' : null }}">
+                                    class="border border-blue-500 rounded-xl p-3 mt-3 {{ $attempt->is_submitted ? 'bg-blue-50' : null }}">
                                     <div class="flex justify-between mb-4 text-xs">
                                         <p>
                                             <span class="font-bold">Score(%)</span> <br />

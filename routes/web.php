@@ -17,6 +17,9 @@ Route::view('profile', 'profile')
 
 require __DIR__.'/auth.php';
 
-Route::get('assessments', AssessmentIndex::class)->name('assessments.index');
-Route::get('assessments/{slug}/{attemptNumber}/exam', AssessmentExam::class)->name('assessment.show');
-Route::get('assessments/{slug}/{attemptNumber}/confirmation', AssessmentConfirmation::class)->name('assessment.confirmation');
+Route::middleware(['auth'])->group(function () {
+    Route::get('assessments', AssessmentIndex::class)->name('assessments.index');
+    Route::get('assessments/{slug}/{attemptNumber}/exam', AssessmentExam::class)->name('assessment.show');
+    Route::get('assessments/{slug}/{attemptNumber}/confirmation', AssessmentConfirmation::class)->name('assessment.confirmation');
+
+});

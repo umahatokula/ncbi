@@ -36,12 +36,15 @@ class Attempt extends Model
     }
 
     public function getScore() {
-        $questions = Question::where('assessment_id', $this->assessment_id)->get();
+        // $questions = Question::where('assessment_id', $this->assessment_id)->get();
+        $questions = (Assessment::findOrFail($this->assessment_id))?->questions;
+
         $responses = $this->userResponses;
 
         $correctlyAnswered = 0;
         foreach ($responses as $response) {
             $question = $questions->where('id', $response->question_id)->first();
+            if(!$question) return;
             $correctOption = $question->getCorrectOption();
 
             // mark as correct if there's no correct option

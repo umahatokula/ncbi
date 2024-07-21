@@ -1,5 +1,4 @@
 <div>
-
     <div class="grid w-full h-full mt-12">
         <div class="flex flex-col shadow-xl mx-auto p-5 bg-white w-full md:w-96 h-56">
             <p class="my-2 text-base">{{ $assessment->name }}</p>
@@ -13,3 +12,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    (function() {
+        // Clear the remaining time from local storage
+        localStorage.removeItem('remainingTime');
+    })();
+</script>

@@ -1,28 +1,38 @@
 <div>
     @php
-    $durationInMinutesFromServer = $assessment->duration_minutes
+    $durationInMinutesFromServer = $assessment->duration_minutes;
     @endphp
-    <div class="shadow-md p-5  text-3xl float-right rounded-lg sticky bg-white top-0" id="countdown"></div>
+    <div class="shadow-md p-5 text-3xl float-right rounded-lg sticky bg-white top-0" id="countdown"></div>
 
-    @foreach ($assessment->questions as $question)
-    <div class="my-6 bg-white p-5 rounded-lg">
-        <p>{{ $loop->index . '. ' . $question->question_text }}</p>
+    @foreach (auth()->user()->questionsOrder as $questionOder)
+    @php
+        $question = $questionOder->question;
+    @endphp
+    <div class="my-6 bg-white p-5 rounded-lg" wire:key="{{ $question->id }}">
+        <p>{{ $loop->index + 1 . '. ' . $question->question_text }}</p>
         <div id="question-{{ $question->id }}">
             @foreach ($question->options as $option)
-            <div class="flex items-center gap-x-4">
+            <div class="flex items-center gap-x-4" wire:key="{{ $option->id }}">
                 <p>{{ $optionsAlphabets[$loop->index] }}</p>
-                <a class="{{ in_array($option->id, $userResponses ? 'font-bold underline bg-blue-100' : null }}" data-request="onSelectOption"
-                    data-request-data="{ assessmentId: {{ assessment . id }}, attemptId: {{ attempt . id }}, questionId: {{ question . id }}, optionId: '{{ option . id }}' }"
-                    href="#" id="{{ option . id }}">{{ option . option_text }}</a>
+                <a class="{{ in_array($option->id, $userResponses) ? 'font-bold underline bg-blue-100' : null }}" wire:click.prevent="selectOption({{ $question->id }}, {{ $option->id }})"
+                    href="#" id="{{ $option->id }}">{{ $option->option_text }}</a>
             </div>
             @endforeach
         </div>
     </div>
     @endforeach
 
+    <button
+        wire:click="onSubmit"
+        wire:loading.class="opacity-50"
+        class="block px-4 py-2 bg-amber-600 text-white"
+    >Submit Test</button>
+</div>
+
 <script>
+(function() {
     // Set the duration in minutes
-    let durationInMinutes = {{ durationInMinutesFromServer }};
+    const durationInMinutes = {{ $durationInMinutesFromServer }};
     let remainingTime = localStorage.getItem('remainingTime');
     let durationInSeconds;
 
@@ -76,17 +86,16 @@
 
         oc.request('#myform', 'onSubmit', {
             data: {
-                attemptId: {{ attempt->id }}
+                attemptId: {{ $attempt->id }}
             },
-            complete: clearTimer(),
+            complete: clearTimer,
         });
 
         // Clear the remaining time from local storage
         localStorage.removeItem('remainingTime');
-
     }
 
     // Start the countdown timer
     updateCountdown();
+})();
 </script>
-</div>
