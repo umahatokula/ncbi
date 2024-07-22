@@ -16,6 +16,7 @@ use App\Enums\MaritalStatus;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Radio;
+use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Section;
@@ -100,12 +101,23 @@ class UserResource extends Resource
                         TextInput::make('growth_track_year')->required()->numeric(),
                     ])->columns(2),
             ])->columnSpan(2),
-            Section::make()->schema([
-                Select::make('sets')
-                    ->multiple()
-                    ->preload()
-                    ->relationship('sets', titleAttribute: 'name')
-            ])->columnSpan(1)
+            Group::make()
+                ->schema([
+                    Section::make()->schema([
+                        Select::make('sets')
+                            ->multiple()
+                            ->preload()
+                            ->relationship('sets', titleAttribute: 'name')
+                    ])->columnSpan(1),
+                    Section::make()->schema([
+                        TextInput::make('password')
+                            ->password()
+                            ->revealable()
+                            ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
+                            ->dehydrated(fn (?string $state): bool => filled($state))
+                            ->required(fn (string $operation): bool => $operation === 'create')
+                    ])->columnSpan(1)
+                ]),
         ])->columns(3);
     }
 
